@@ -1,0 +1,71 @@
+a{
+    text-decoration: none;
+}
+
+#editar{
+    color: green;
+}
+
+#borrar{
+    color: red;
+}
+
+#detalle{
+    color: darkorange;
+}
+
+#volver{
+    background-color: black;
+    cursor: pointer;
+    border: none;
+    padding: 16px 32px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#agregar{
+    background-color: rgb(22, 148, 41);
+    cursor: pointer;
+    border: none;
+    padding: 16px 32px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+
+#containerCrearCliente
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#containerCrearCliente form
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 500px;
+    height: 700px;
+    padding: 10px;
+}
+
+#containerCrearCliente form .mb-3{
+    display: flex;
+    flex-direction: column;
+}
+
+#containerCrearCliente form .form-buttons
+{
+    display: flex;
+    justify-content: center;
+}
+
+#containerCrearCliente form .form-buttons button{
+    width: 50%;
+    margin: 10px;
+}

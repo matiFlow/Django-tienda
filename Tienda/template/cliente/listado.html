@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{%block js%}
+
+<script>
+    function eliminarRegistro(id)
+    {
+        var url = "{% url 'cliente_app:borrar_cliente' 0 %}".replace('0', id);
+        Swal.fire({
+            "title":"¿Estas seguro de que deseas eliminar?",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"Cancelar",
+            "cancelButtonColor":"red",
+            "confirmButtonText":"Si, eliminar",
+            "confirmButtonColor":"green"
+        })
+        .then(function(result) {
+            if(result.isConfirmed){
+                window.location.href = url
+            }
+        })
+    }
+</script>
+
+{%endblock%}
+
+{% block content %}
+
+<tbody>
+    <div class="container mt-4">
+
+        <div class="d-flex mb-4 mt-4 ">
+            <h1>Listado de clientes</h1>
+        </div>
+
+        <!--Search-->
+        <div class="searchContainer mb-3 mt-3">
+            <form method="GET" id="formSearch">
+                {% csrf_token %}
+                <div class="input-group">
+                    <!--Nombre-->
+                    <input type="text" id="fieldSearchName" class="form-control bg-light border-0 small"
+                        placeholder="Nombre..." name="name" value="{{ request.GET.name }}">
+                    <span class="mx-2"></span>
+
+                    <!--Apellido-->
+                    <input type="text" id="fieldSearchSurname" class="form-control bg-light border-0 small"
+                        placeholder="Apellido..." name="surname" value="{{ request.GET.surname }}">
+                    <span class="mx-2"></span>
+
+                    <!--DNI-->
+                    <input type="text" id="fieldSearchDni" class="form-control bg-light border-0 small"
+                        placeholder="DNI..." name="dni" value="{{ request.GET.dni }}">
+
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="cleanSearchButton mt-2">
+                    <button class="btn btn-primary" id="cleanButton" onclick=" return limpiarBusqueda();">
+                        Limpiar Busqueda
+                    </button>
+                </div>
+            </form>
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>DNI</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cliente in lista %}
+                        <tr>
+                            <td>{{ cliente.nombre }}</td>
+                            <td>{{ cliente.apellido }}</td>
+                            <td>{{ cliente.dni }}</td>
+                            <td class="">
+                                <!--Editar-->
+                                <a href="{% url 'cliente_app:editar_cliente' cliente.dni %}"
+                                    class="fa-solid fa-pen-to-square" id="editar" title="Editar"></a>
+
+                                <span class="mx-2"></span>
+                                <!-- Ver detalles-->
+                                <a href="" class="fa-solid fa-eye" id="detalle" title="Detalle"></a>
+
+                                <span class="mx-2"></span>
+                                <!--Borrar-->
+                                <a href="#" onclick="eliminarRegistro({{cliente.pk}})" class="fa-solid fa-trash"
+                                    id="borrar" title="Borrar" rel="delete"></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="pagination justify-content-end">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                <a class="fa-solid fa-angles-left" href="?page={{ page_obj.previous_page_number }}"></a>
+                <a class="fa-solid fa-angle-left" href="?page=1"></a>
+                {% endif %}
+
+                <span class="current">
+                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                <a class="fa-solid fa-angle-right" href="?page={{ page_obj.next_page_number }}"></a>
+                <a class="fa-solid fa-angles-right" href="?page={{ page_obj.paginator.num_pages }}"></a>
+                {% endif %}
+            </span>
+        </div>
+
+        <div class="d-flex">
+            <a id="volver">Volver al menu</a>
+            <span class="mx-2"></span>
+            <a id="agregar" href="{% url 'cliente_app:crear_cliente' %}">Añadir Registro</a>
+        </div>
+    </div>
+</tbody>
+
+{% endblock content %}
