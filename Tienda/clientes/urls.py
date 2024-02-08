@@ -21,6 +21,11 @@ urlpatterns = [
         name='editar_cliente'
     ),
     path(
+        'detalleCliente/<pk>/', #se detalla que registro segun su clave primaria desea detallar
+        views.ClienteDetalles.as_view(),
+        name='detalle_Cliente',
+    ),
+    path(
         'borrarCliente/<pk>/',
         views.ClienteBorrar.as_view(),
         name='borrar_cliente'

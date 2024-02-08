@@ -2,15 +2,15 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5" id="containerCrearCliente">
+<div class="container mt-5" id="containerCrear">
     <div class="d-flex justify-content-center mb-4 mt-4">
-        <h1>Añadir un nuevo cliente</h1>
+        <h1>Añadir un nuevo proveedor</h1>
     </div>
-    <form method="post" action="{% url 'cliente_app:crear_cliente' %}" id="clienteForm" class="mb-5 ">
+    <form method="post" action="{% url 'proveedor_app:crear_proveedor' %}" id="proveedorForm" class="mb-5">
         {% csrf_token %}
         <div class="mb-3">
-            <label for="{{ form.dni.id_for_label }}">DNI:</label>
-            {{ form.dni }}
+            <label for="{{ form.id.id_for_label }}">Id:</label>
+            {{ form.id }}
         </div>
         <div class="mb-3">
             <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
@@ -30,9 +30,9 @@
         </div>
 
         <div class="form-buttons">
-            <button type="submit" class="btn btn-primary" disabled>Guardar</button>
+            <button type="submit" class="btn btn-primary" id="guardarButton" disabled>Guardar</button>
         </div>
     </form>
-    <a id="volver" href="{% url 'cliente_app:listado_clientes' %}" >Volver</a>
+    <a id="volver" href="{% url 'proveedor_app:listado_proveedores' %}" >Volver</a>
 </div>
 {% endblock content %}

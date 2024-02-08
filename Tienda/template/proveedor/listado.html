@@ -7,7 +7,7 @@
 <script>
     function eliminarRegistro(id)
     {
-        var url = "{% url 'cliente_app:borrar_cliente' 0 %}".replace('0', id);
+        var url = "{% url 'proveedor_app:borrar_proveedor' 0 %}".replace('0', id);
         Swal.fire({
             "title":"¿Estas seguro de que deseas eliminar?",
             "icon":"question",
@@ -33,7 +33,7 @@
     <div class="container mt-4">
 
         <div class="d-flex mb-4 mt-4 ">
-            <h1>Listado de clientes</h1>
+            <h1>Listado de proveedores</h1>
         </div>
 
         <!--Search-->
@@ -51,9 +51,9 @@
                         placeholder="Apellido..." name="surname" value="{{ request.GET.surname }}">
                     <span class="mx-2"></span>
 
-                    <!--DNI-->
-                    <input type="text" id="fieldSearchDni" class="form-control bg-light border-0 small"
-                        placeholder="DNI..." name="dni" value="{{ request.GET.dni }}">
+                    <!--Telefono-->
+                    <input type="text" id="fieldSearchTelefono" class="form-control bg-light border-0 small"
+                        placeholder="Telefono..." name="telefono" value="{{ request.GET.telefono }}">
 
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">
@@ -69,6 +69,9 @@
             </form>
         </div>
 
+
+
+
         <div class="row">
             <div class="table-responsive">
                 <table class="table">
@@ -76,28 +79,28 @@
                         <tr>
                             <th>Nombre</th>
                             <th>Apellido</th>
-                            <th>DNI</th>
+                            <th>Telefono</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for cliente in lista %}
+                        {% for proveedor in lista %}
                         <tr>
-                            <td>{{ cliente.nombre }}</td>
-                            <td>{{ cliente.apellido }}</td>
-                            <td>{{ cliente.dni }}</td>
+                            <td>{{ proveedor.nombre }}</td>
+                            <td>{{ proveedor.apellido }}</td>
+                            <td>{{ proveedor.telefono }}</td>
                             <td class="">
                                 <!--Editar-->
-                                <a href="{% url 'cliente_app:editar_cliente' cliente.pk %}"
+                                <a href="#"
                                     class="fa-solid fa-pen-to-square" id="editar" title="Editar"></a>
 
                                 <span class="mx-2"></span>
                                 <!-- Ver detalles-->
-                                <a href="{% url 'cliente_app:detalle_Cliente' cliente.pk %}" class="fa-solid fa-eye" id="detalle" title="Detalle"></a>
+                                <a href="#" class="fa-solid fa-eye" id="detalle" title="Detalle"></a>
 
                                 <span class="mx-2"></span>
                                 <!--Borrar-->
-                                <a href="#" onclick="eliminarRegistro({{cliente.pk}})" class="fa-solid fa-trash"
+                                <a href="#" onclick="eliminarRegistro({{proveedor.pk}})" class="fa-solid fa-trash"
                                     id="borrar" title="Borrar" rel="delete"></a>
                             </td>
                         </tr>
@@ -129,7 +132,7 @@
         <div class="d-flex">
             <a id="volver">Volver al menu</a>
             <span class="mx-2"></span>
-            <a id="agregar" href="{% url 'cliente_app:crear_cliente' %}">Añadir Registro</a>
+            <a id="agregar" href="{% url 'proveedor_app:crear_proveedor' %}">Añadir Registro</a>
         </div>
     </div>
 </tbody>

@@ -55,14 +55,9 @@ class ClienteCrear(CreateView): #Crear cliente
     
 class ClienteEditar(UpdateView): #Crear cliente
     model = Cliente
+    template_name = 'cliente\editar.html'
     form_class = ClienteForm
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-
-        self.object.save()
-
-        return response
+    success_url = reverse_lazy('cliente_app:listado_clientes')
     
 class ClienteBorrar(View):
     print("llego aqui")
@@ -70,3 +65,10 @@ class ClienteBorrar(View):
         cliente  = get_object_or_404(Cliente, pk=kwargs['pk'])
         cliente .delete()
         return redirect('cliente_app:listado_clientes')
+    
+
+class ClienteDetalles(DetailView): 
+    model = Cliente
+    template_name = "cliente/detalle.html"
+    context_object_name = "detalle"
+    login_url = reverse_lazy('cliente_app:listado_clientes')

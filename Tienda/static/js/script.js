@@ -5,6 +5,14 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $("#proveedorForm input, #proveedorForm select").on("input", function () {
+        var formIsValid = $("#proveedorForm")[0].checkValidity();
+        $("#proveedorForm button[type='submit']").prop("disabled", !formIsValid);
+    });
+});
+
+
 function limpiarBusqueda() {
     var fieldSearchName = document.getElementById("fieldSearchName");
     var fieldSearchSurname = document.getElementById("fieldSearchSurname");
