@@ -2,15 +2,16 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5" id="containerCrear">
+<div class="container mt-5" id="containerEditar">
     <div class="d-flex justify-content-center mb-4 mt-4">
-        <h1>Añadir un nuevo proveedor</h1>
+        <h1>Editar Proveedor</h1>
     </div>
-    <form method="post" action="{% url 'proveedor_app:crear_proveedor' %}" id="proveedorForm" class="mb-5">
+    <form method="post" id="proveedorForm" class="mb-5 ">
         {% csrf_token %}
         <div class="mb-3">
             <label for="{{ form.id.id_for_label }}">Id:</label>
-            {{ form.id }}
+            {{ form.id.as_hidden }}
+            <input type="text" value="{{ form.id.value }}" disabled style="opacity: 0.5;">
         </div>
         <div class="mb-3">
             <label for="{{ form.nombre.id_for_label }}">Nombre:</label>

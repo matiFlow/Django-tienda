@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block js%}
+<script>
+    function crearMarca() {
+        Swal.fire({
+            title: 'Crear nueva marca',
+            html: '<form id="formularioCreacion">' +
+                '{% csrf_token %}' +
+                '<div class="mb-3">' +
+                '<label for="{{ marca_form.idMarca.id_for_label }}">Id:</label>' +
+                '<input type="text" name="{{ marca_form.idMarca.name }}" value="{{ marca_form.idMarca.value }}" required>' +
+                '</div>' +
+                '<div class="mb-3">' +
+                '<label for="{{ marca_form.marca.id_for_label }}">Marca:</label>' +
+                '<input type="text" name="{{ marca_form.marca.name }}" value="{{ marca_form.marca.value }}" required>' +
+                '</div>' +
+                '</form>',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Crear',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = Swal.getPopup().querySelector('#formularioCreacion');
+                const formData = new FormData(form);
+                formData.append('{% csrf_token %}', '{{ csrf_token }}');
+                fetch("{% url 'producto_app:crear_marca' %}", {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error en la solicitud de creación');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        messages.success(this.request, 'Registro guardado con éxito');
+                        Swal.close();
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        messages.error(this.request, 'Error al guardar el registro');
+                    });
+            }
+        });
+    }
+
+</script>
+
+{%endblock%}
+
+{% block content %}
+<div class="container mt-5" id="containerCrear">
+    <div class="d-flex justify-content-center mb-4 mt-4">
+        <h1>Crear producto</h1>
+    </div>
+    <form action="{% url 'producto_app:crear_producto' %}" method="post" id="productoForm" class="mb-5 ">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.id.id_for_label }}">Id:</label>
+            {{ form.id }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.tipo.id_for_label }}">Tipo:</label>
+            {{ form.tipo }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.descripcion.id_for_label }}">Descripcion:</label>
+            {{ form.descripcion }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.precio.id_for_label }}">Precio:</label>
+            {{ form.precio }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.Cantidad.id_for_label }}">Cantidad:</label>
+            {{ form.cantidad }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.marca.id_for_label }}">Marca:</label>
+            {{ form.marca }}
+            <span class="mx-y"></span>
+            <a id="agregar" href="#" onclick="crearMarca()">Añadir Marca</a>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.proveedor.id_for_label }}">Proveedor:</label>
+            {{ form.proveedor }}
+            <span class="mx-y"></span>
+            <a id="agregar" href="{% url 'proveedor_app:crear_proveedor' %}">Añadir Proveedor</a>
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit" id="agregar">Guardar</button>
+            <a id="volver" href="{% url 'producto_app:listado_productos' %}">Volver</a>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

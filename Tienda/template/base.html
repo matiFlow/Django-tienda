@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
     <!--Font Awesome-->
     <link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}">
+    <!--Font Google-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
     <!--CSS-->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Tienda</title>
@@ -19,7 +23,7 @@
 </head>
 
 <body>
-    <div>
+    <div class="contenido">
         {% block content %}
         {% endblock content %}
     </div>
@@ -29,10 +33,23 @@
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.js"></script>
     <script src="{% static 'js/script.js' %}"></script>
+
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                Swal.fire({
+                    "title": "Listo",
+                    "text": "{{message}}",
+                    "icon": "success",
+                    "confirmButtonColor": "green"
+                })
+            </script>
+        {% endfor %}
+    {% endif %}
     {% block js %}
-        
+
     {% endblock %}
-        
+
 </body>
 
 </html>

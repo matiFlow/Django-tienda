@@ -12,11 +12,22 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $("#productoForm input, #productoForm select").on("input", function () {
+        var formIsValid = $("#productoForm")[0].checkValidity();
+        $("#productoForm button[type='submit']").prop("disabled", !formIsValid);
+    });
+});
+
 
 function limpiarBusqueda() {
     var fieldSearchName = document.getElementById("fieldSearchName");
     var fieldSearchSurname = document.getElementById("fieldSearchSurname");
     var fieldSearchDni = document.getElementById("fieldSearchDni");
+    var fieldSearchTipo = document.getElementById("fieldSearchTipo");
+    var fieldSearchDescripcion = document.getElementById("fieldSearchDescripcion");
+    var fieldSearchPrecioMinimo = document.getElementById("fieldSearchPrecioMinimo");
+    var fieldSearchPrecioMaximo = document.getElementById("fieldSearchPrecioMaximo");
 
     if (fieldSearchName) {
         fieldSearchName.value = "";
@@ -27,6 +38,23 @@ function limpiarBusqueda() {
     if (fieldSearchDni) {
         fieldSearchDni.value = "";
     }
+
+    if (fieldSearchTipo) {
+        fieldSearchTipo.value = "";
+    }
+
+    if (fieldSearchDescripcion) {
+        fieldSearchDescripcion.value = "";
+    }
+
+    if (fieldSearchPrecioMinimo) {
+        fieldSearchPrecioMinimo.value = "";
+    }
+
+    if (fieldSearchPrecioMaximo) {
+        fieldSearchPrecioMaximo.value = "";
+    }
+
     history.replaceState({}, document.title, removeSearchParamsFromURL(window.location.href));
 
     document.getElementById("formSearch").submit();

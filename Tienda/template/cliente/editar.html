@@ -2,37 +2,38 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5" id="containerCrearCliente">
+<div class="container mt-5" id="containerEditar">
     <div class="d-flex justify-content-center mb-4 mt-4">
         <h1>Editar cliente</h1>
     </div>
-    <form method="post" action="{% url 'cliente_app:editar_cliente' %}" id="clienteForm" class="mb-5 ">
+    <form method="post" id="clienteForm" class="mb-5 ">
         {% csrf_token %}
         <div class="mb-3">
             <label for="{{ form.dni.id_for_label }}">DNI:</label>
-            {{ form.dni }}
+            {{ form.dni.as_hidden }}
+            <input type="text" value="{{ form.dni.value }}" disabled style="opacity: 0.5;">
         </div>
         <div class="mb-3">
             <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
             {{ form.nombre }}
         </div>
         <div class="mb-3">
-            <label for="{{ form.telefono.id_for_label }}">Apellido:</label>
+            <label for="{{ form.apellido.id_for_label }}">Apellido:</label>
             {{ form.apellido }}
         </div>
         <div class="mb-3">
-            <label for="{{ form.dni.id_for_label }}">Telefono:</label>
+            <label for="{{ form.telefono.id_for_label }}">Telefono:</label>
             {{ form.telefono }}
         </div>
         <div class="mb-3">
-            <label for="{{ form.dni.id_for_label }}">Dirección:</label>
+            <label for="{{ form.direccion.id_for_label }}">Dirección:</label>
             {{ form.direccion }}
         </div>
 
         <div class="form-buttons">
-            <button type="submit" class="btn btn-primary" disabled>Guardar</button>
+            <button type="submit" id="agregar" disabled>Guardar</button>
+            <a id="volver" href="{% url 'cliente_app:listado_clientes' %}" >Volver</a>
         </div>
     </form>
-    <a id="volver" href="{% url 'cliente_app:listado_clientes' %}" >Volver</a>
 </div>
 {% endblock content %}

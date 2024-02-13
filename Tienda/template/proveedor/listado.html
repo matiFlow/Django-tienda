@@ -91,12 +91,12 @@
                             <td>{{ proveedor.telefono }}</td>
                             <td class="">
                                 <!--Editar-->
-                                <a href="#"
+                                <a href="{% url 'proveedor_app:editar_proveedor' proveedor.pk %}"
                                     class="fa-solid fa-pen-to-square" id="editar" title="Editar"></a>
 
                                 <span class="mx-2"></span>
                                 <!-- Ver detalles-->
-                                <a href="#" class="fa-solid fa-eye" id="detalle" title="Detalle"></a>
+                                <a href="{% url 'proveedor_app:detalle_proveedor' proveedor.pk %}" class="fa-solid fa-eye" id="detalle" title="Detalle"></a>
 
                                 <span class="mx-2"></span>
                                 <!--Borrar-->
@@ -130,7 +130,7 @@
         </div>
 
         <div class="d-flex">
-            <a id="volver">Volver al menu</a>
+            <a id="volver" href="{% url 'inicio_app:inicio' %}">Volver al menu</a>
             <span class="mx-2"></span>
             <a id="agregar" href="{% url 'proveedor_app:crear_proveedor' %}">Añadir Registro</a>
         </div>

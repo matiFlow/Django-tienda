@@ -7,7 +7,7 @@
 <script>
     function eliminarRegistro(id)
     {
-        var url = "{% url 'cliente_app:borrar_cliente' 0 %}".replace('0', id);
+        var url = "{% url 'producto_app:borrar_producto' 0 %}".replace('0', id);
         Swal.fire({
             "title":"¿Estas seguro de que deseas eliminar?",
             "icon":"question",
@@ -34,7 +34,7 @@
     <div class="container mt-4">
 
         <div class="d-flex mb-4 mt-4 border-bottom border-3 ">
-            <h1>Listado de clientes</h1>
+            <h1>Listado de Productos</h1>
         </div>
 
         <!--Search-->
@@ -42,19 +42,24 @@
             <form method="GET" id="formSearch">
                 {% csrf_token %}
                 <div class="input-group">
-                    <!--Nombre-->
-                    <input type="text" id="fieldSearchName" class="form-control bg-light border-0 small"
-                        placeholder="Nombre..." name="name" value="{{ request.GET.name }}">
+                    <!--Tipo-->
+                    <input type="text" id="fieldSearchTipo" class="form-control bg-light border-0 small"
+                        placeholder="Tipo..." name="tipo" value="{{ request.GET.tipo }}">
                     <span class="mx-2"></span>
 
-                    <!--Apellido-->
-                    <input type="text" id="fieldSearchSurname" class="form-control bg-light border-0 small"
-                        placeholder="Apellido..." name="surname" value="{{ request.GET.surname }}">
+                    <!--Descripcion-->
+                    <input type="text" id="fieldSearchDescripcion" class="form-control bg-light border-0 small"
+                        placeholder="Descripción..." name="descripcion" value="{{ request.GET.descripcion }}">
                     <span class="mx-2"></span>
 
-                    <!--DNI-->
-                    <input type="text" id="fieldSearchDni" class="form-control bg-light border-0 small"
-                        placeholder="DNI..." name="dni" value="{{ request.GET.dni }}">
+                    <!--Precio minimo-->
+                    <input type="text" id="fieldSearchPrecioMinimo" class="form-control bg-light border-0 small"
+                        placeholder="Precio minimo..." name="precioMinimo" value="{{ request.GET.precioMinimo }}">
+                    <span class="mx-2"></span>
+
+                    <!--Precio maximo-->
+                    <input type="text" id="fieldSearchPrecioMaximo" class="form-control bg-light border-0 small"
+                        placeholder="Precio maximo..." name="precioMaximo" value="{{ request.GET.precioMaximo }}">
                     <span class="mx-2"></span>
 
                     <div class="input-group-append">
@@ -76,29 +81,29 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>DNI</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for cliente in lista %}
+                        {% for producto in lista %}
                         <tr>
-                            <td>{{ cliente.nombre }}</td>
-                            <td>{{ cliente.apellido }}</td>
-                            <td>{{ cliente.dni }}</td>
+                            <td>{{ producto.tipo }}</td>
+                            <td>{{ producto.descripcion }}</td>
+                            <td>{{ producto.precio }}</td>
                             <td class="">
                                 <!--Editar-->
-                                <a href="{% url 'cliente_app:editar_cliente' cliente.pk|default:0 %} " class="fa-solid fa-pen-to-square" id="editar" title="Editar"></a>
+                                <a href="{% url 'producto_app:editar_producto' producto.pk %} " class="fa-solid fa-pen-to-square" id="editar" title="Editar"></a>
 
                                 <span class="mx-2"></span>
                                 <!-- Ver detalles-->
-                                <a href="{% url 'cliente_app:detalle_Cliente' cliente.pk %}" class="fa-solid fa-eye" id="detalle" title="Detalle"></a>
+                                <a href="{% url 'producto_app:detalle_producto' producto.pk %}" class="fa-solid fa-eye" id="detalle" title="Detalle"></a>
 
                                 <span class="mx-2"></span>
                                 <!--Borrar-->
-                                <a href="#" onclick="eliminarRegistro({{cliente.pk}})" class="fa-solid fa-trash"
+                                <a href="#" onclick="eliminarRegistro({{producto.pk}})" class="fa-solid fa-trash"
                                     id="borrar" title="Borrar" rel="delete"></a>
                             </td>
                         </tr>
@@ -128,9 +133,9 @@
         </div>
 
         <div class="d-flex">
-            <a href="{% url 'inicio_app:inicio' %}" id="volver">Volver al menu</a>
+            <a id="volver" href="{% url 'inicio_app:inicio' %}">Volver al menu</a>
             <span class="mx-2"></span>
-            <a id="agregar" href="{% url 'cliente_app:crear_cliente' %}">Añadir Registro</a>
+            <a id="agregar" href="{% url 'producto_app:crear_producto' %}">Añadir Registro</a>
         </div>
     </div>
 </tbody>
