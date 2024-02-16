@@ -52,7 +52,10 @@ p{
     font-weight: bold;
 }
 
-/*Crear*/
+
+
+
+/*Crear y Editar*/
 #containerEditar,
 #containerCrear
 {
@@ -140,6 +143,10 @@ p{
     height: 100%;
 }
 
+.indexSeccion p{
+    font-size: 20px;
+    font-weight: bolder;
+} 
 
 .indexSeccion .cardsContainer{
     display: flex;
@@ -169,6 +176,7 @@ p{
 
 .indexSeccion .cardsContainer .card:hover{
     transform: scale(1.04);
+    fill: #fff;
 }
 
 .indexSeccion .cardsContainer .card svg{
@@ -184,15 +192,30 @@ p{
 }
 
 .indexSeccion .cardsContainer #cardCliente{
-    background-color: yellow;
+    background-color: rgb(198, 198, 18);
+}
+
+.indexSeccion .cardsContainer #cardCliente:hover{
+    background-color:#211C6A;
+    color: #fff;
 }
 
 .indexSeccion .cardsContainer #cardProveedor{
     background-color: red;
 }
 
+.indexSeccion .cardsContainer #cardProveedor:hover{
+    background-color:#211C6A;
+    color: #fff;
+}
+
 .indexSeccion .cardsContainer #cardProducto{
     background-color: orange;
+}
+
+.indexSeccion .cardsContainer #cardProducto:hover{
+    background-color:#211C6A;
+    color: #fff;
 }
 
 @media screen and (max-width:767px){

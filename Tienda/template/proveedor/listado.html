@@ -114,8 +114,8 @@
         <div class="pagination justify-content-end">
             <span class="step-links">
                 {% if page_obj.has_previous %}
-                <a class="fa-solid fa-angles-left" href="?page={{ page_obj.previous_page_number }}"></a>
-                <a class="fa-solid fa-angle-left" href="?page=1"></a>
+                <a class="fa-solid fa-angles-left" href="?page=1"></a>
+                <a class="fa-solid fa-angle-left" href="?page={{ page_obj.previous_page_number }}"></a>
                 {% endif %}
 
                 <span class="current">

@@ -1,9 +1,12 @@
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.contrib import messages
 from .models import Proveedor
 from .form import ProveedorForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
     ListView,
     DeleteView,
@@ -11,10 +14,10 @@ from django.views.generic import (
     UpdateView,
     DetailView
 )
-
+@method_decorator(login_required, name='dispatch')
 # Create your views here.
 ############################ VIEWS ####################################
-class ProveedorListar(ListView):  #Listado de Proveedors
+class ProveedorListar(ListView, LoginRequiredMixin):  #Listado de Proveedors
     model = Proveedor
     template_name = 'proveedor/listado.html'
     context_object_name = "lista"
@@ -41,7 +44,7 @@ class ProveedorListar(ListView):  #Listado de Proveedors
         return queryset
     
 
-class ProveedorCrear(CreateView): #Crear Proveedor
+class ProveedorCrear(CreateView, LoginRequiredMixin): #Crear Proveedor
     model = Proveedor
     template_name = 'proveedor/crear.html'
     form_class = ProveedorForm
@@ -54,7 +57,7 @@ class ProveedorCrear(CreateView): #Crear Proveedor
         return super(ProveedorCrear, self).form_valid(form)
     
     
-class ProveedorEditar(UpdateView): #Crear proveedor
+class ProveedorEditar(UpdateView, LoginRequiredMixin): #Crear proveedor
     model = Proveedor
     template_name = 'proveedor/editar.html'
     form_class = ProveedorForm
@@ -71,13 +74,13 @@ class ProveedorEditar(UpdateView): #Crear proveedor
         messages.success(self.request, 'Operacion realizada con éxito')
         return super(ProveedorEditar, self).form_valid(form)
     
-class ProveedorBorrar(DeleteView):
+class ProveedorBorrar(DeleteView, LoginRequiredMixin):
     def get(self, request, *args, **kwargs):
         proveedor  = get_object_or_404(Proveedor, pk=kwargs['pk'])
         proveedor.delete()
         return redirect('proveedor_app:listado_proveedores')
 
-class ProveedorDetalles(DetailView): 
+class ProveedorDetalles(DetailView, LoginRequiredMixin): 
     model = Proveedor
     template_name = "proveedor/detalle.html"
     context_object_name = "detalle"

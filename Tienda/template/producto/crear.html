@@ -2,6 +2,19 @@
 {% load static %}
 {%block js%}
 <script>
+
+    function esNull(marca_form){
+        if(marca_form.idMarca == null){
+            marca_form.idMarca = ""
+        }
+
+        console.log("entro en la funcion")
+
+        if(marca_form.marca == null){
+            marca_form.marca = ""
+        }        
+    }
+
     function crearMarca() {
         Swal.fire({
             title: 'Crear nueva marca',
@@ -9,11 +22,11 @@
                 '{% csrf_token %}' +
                 '<div class="mb-3">' +
                 '<label for="{{ marca_form.idMarca.id_for_label }}">Id:</label>' +
-                '<input type="text" name="{{ marca_form.idMarca.name }}" value="{{ marca_form.idMarca.value }}" required>' +
+                '{{ marca_form.idMarca }}' +
                 '</div>' +
                 '<div class="mb-3">' +
                 '<label for="{{ marca_form.marca.id_for_label }}">Marca:</label>' +
-                '<input type="text" name="{{ marca_form.marca.name }}" value="{{ marca_form.marca.value }}" required>' +
+                '{{ marca_form.marca }}' +
                 '</div>' +
                 '</form>',
             showCancelButton: true,

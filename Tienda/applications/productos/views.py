@@ -1,8 +1,9 @@
-from django.forms import BaseModelForm
-from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from .models import Marca, Producto
 from .form import MarcaForm, ProductoForm
@@ -14,9 +15,11 @@ from django.views.generic import (
     DetailView
 )
 
+@method_decorator(login_required, name='dispatch')
+
 # Create your views here.
 ############################ VIEWS ####################################
-class ProductoListar(ListView):  #Listado de Productos
+class ProductoListar(ListView, LoginRequiredMixin):  #Listado de Productos
     model = Producto
     template_name = 'producto\listado.html'
     context_object_name = "lista"
@@ -46,7 +49,7 @@ class ProductoListar(ListView):  #Listado de Productos
         return queryset
     
 
-class ProductoCrear(CreateView): #Crear producto
+class ProductoCrear(CreateView, LoginRequiredMixin): #Crear producto
     model = Producto
     template_name = 'producto\crear.html'
     form_class = ProductoForm
@@ -65,7 +68,7 @@ class ProductoCrear(CreateView): #Crear producto
         return super(ProductoCrear, self).form_valid(form)
     
     
-class ProductoEditar(UpdateView): #Crear producto
+class ProductoEditar(UpdateView, LoginRequiredMixin): #Crear producto
     model = Producto
     template_name = 'producto\editar.html'
     form_class = ProductoForm
@@ -88,21 +91,21 @@ class ProductoEditar(UpdateView): #Crear producto
         messages.success(self.request, 'Operacion realizada con éxito')
         return super(ProductoEditar, self).form_valid(form)
     
-class ProductoBorrar(DeleteView):
+class ProductoBorrar(DeleteView, LoginRequiredMixin):
     def get(self, request, *args, **kwargs):
         producto  = get_object_or_404(Producto, pk=kwargs['pk'])
         producto.delete()
         return redirect('producto_app:listado_productos')
     
 
-class ProductoDetalles(DetailView): 
+class ProductoDetalles(DetailView, LoginRequiredMixin): 
     model = Producto
     template_name = "producto/detalle.html"
     context_object_name = "detalle"
     login_url = reverse_lazy('producto_app:listado_productos')
 
 
-class MarcaCrear(CreateView): #Crear marca
+class MarcaCrear(CreateView, LoginRequiredMixin): #Crear marca
     model = Marca
     form_class = MarcaForm
     template_name = "producto/listado.html"

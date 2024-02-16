@@ -1,7 +1,13 @@
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from audioop import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views import View
 from django.contrib import messages
+from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
 from .models import Cliente
 from .form import ClienteForm
 from django.views.generic import (
@@ -12,9 +18,14 @@ from django.views.generic import (
     DetailView
 )
 
+from django.views.generic.edit import (
+    FormView
+)
+@method_decorator(login_required, name='dispatch')
+
 # Create your views here.
 ############################ VIEWS ####################################
-class ClienteListar(ListView):  #Listado de clientes
+class ClienteListar(ListView, LoginRequiredMixin):  #Listado de clientes
     model = Cliente
     template_name = 'cliente\listado.html'
     context_object_name = "lista"
@@ -40,7 +51,7 @@ class ClienteListar(ListView):  #Listado de clientes
         return queryset
     
 
-class ClienteCrear(CreateView): #Crear cliente
+class ClienteCrear(CreateView, LoginRequiredMixin): #Crear cliente
     model = Cliente
     template_name = 'cliente\crear.html'
     form_class = ClienteForm
@@ -53,7 +64,7 @@ class ClienteCrear(CreateView): #Crear cliente
         return super(ClienteCrear, self).form_valid(form)
     
     
-class ClienteEditar(UpdateView): #Crear cliente
+class ClienteEditar(UpdateView, LoginRequiredMixin): #Crear cliente
     model = Cliente
     template_name = 'cliente\editar.html'
     form_class = ClienteForm
@@ -70,15 +81,18 @@ class ClienteEditar(UpdateView): #Crear cliente
         messages.success(self.request, 'Operacion realizada con éxito')
         return super(ClienteEditar, self).form_valid(form)
     
-class ClienteBorrar(DeleteView):
+class ClienteBorrar(DeleteView, LoginRequiredMixin):
     def get(self, request, *args, **kwargs):
         cliente  = get_object_or_404(Cliente, pk=kwargs['pk'])
         cliente .delete()
+        messages.success(self.request, 'Se elimino correctamente')
         return redirect('cliente_app:listado_clientes')
     
 
-class ClienteDetalles(DetailView): 
+class ClienteDetalles(DetailView, LoginRequiredMixin): 
     model = Cliente
     template_name = "cliente/detalle.html"
     context_object_name = "detalle"
     login_url = reverse_lazy('cliente_app:listado_clientes')
+
+
