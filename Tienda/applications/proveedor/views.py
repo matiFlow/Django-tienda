@@ -3,6 +3,8 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
+from .serializer import ProveedorSerializer
+from rest_framework.generics import ListAPIView
 from django.contrib import messages
 from .models import Proveedor
 from .form import ProveedorForm
@@ -85,3 +87,12 @@ class ProveedorDetalles(DetailView, LoginRequiredMixin):
     template_name = "proveedor/detalle.html"
     context_object_name = "detalle"
     login_url = reverse_lazy('proveedor_app:listado_proveedores')
+
+# API
+class ProveedorListApiView(ListAPIView):
+
+    serializer_class = ProveedorSerializer
+    template_name = "proveedor/listadoApi.html"
+
+    def get_queryset(self):
+        return Proveedor.objects.all()

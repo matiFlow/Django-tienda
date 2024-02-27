@@ -52,7 +52,9 @@ p{
     font-weight: bold;
 }
 
-
+#agregar:disabled{
+    opacity: 0.3;
+}
 
 
 /*Crear y Editar*/
@@ -141,6 +143,19 @@ p{
 /*Pagina de Inicio*/
 .indexSeccion{
     height: 100%;
+}
+
+.indexSeccion .logoutIcon{
+    position: absolute;
+    float: right;
+    width: 100%;
+    margin: 0px 0px 0px 20px;
+}
+
+.indexSeccion .logoutIcon a{
+    color: #211C6A;
+    text-decoration: none;
+    font-size: 30px;
 }
 
 .indexSeccion p{

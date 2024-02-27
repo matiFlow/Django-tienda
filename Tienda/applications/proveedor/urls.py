@@ -29,5 +29,10 @@ urlpatterns = [
         'detalleProveedor/<pk>/',
         views.ProveedorDetalles.as_view(),
         name='detalle_proveedor',
+    ),
+    path(
+        'listadoProveedores/api/',
+        views.ProveedorListApiView.as_view(),
+        name='listado_proveedor_api'
     )
 ]

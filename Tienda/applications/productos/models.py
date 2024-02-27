@@ -28,4 +28,4 @@ class Producto(models.Model):
         verbose_name_plural = 'Productos'
 
     def __str__(self):
-        return f"{self.id}, {self.nombre}, {self.precio}"
+        return f"{self.id}, {self.tipo}, {self.precio}"

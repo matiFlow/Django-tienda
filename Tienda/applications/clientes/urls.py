@@ -29,5 +29,20 @@ urlpatterns = [
         'editarCliente/<pk>',
         views.ClienteEditar.as_view(),
         name='editar_cliente'
+    ),
+    path(
+        'listadoCliente/api/',
+        views.ClienteListApiView.as_view(),
+        name='listado_cliente_api'
+    ),
+    path(
+        'login',
+        views.LoginUser.as_view(),
+        name='login-user'
+    ),
+    path(
+        'logout',
+        views.LogoutView.as_view(),
+        name='logout-user'
     )
 ]

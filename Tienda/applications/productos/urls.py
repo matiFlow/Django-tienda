@@ -34,5 +34,10 @@ urlpatterns = [
         'crearMarca/',
         views.MarcaCrear.as_view(),
         name='crear_marca'
+    ),
+    path(
+        'listadoProductos/api/',
+        views.ProductoListApiView.as_view(),
+        name='listado_productos_api'
     )
 ]

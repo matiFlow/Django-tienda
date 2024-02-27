@@ -5,6 +5,8 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from rest_framework.generics import ListAPIView
+from .serializer import ProdutoSerializer
 from .models import Marca, Producto
 from .form import MarcaForm, ProductoForm
 from django.views.generic import (
@@ -120,3 +122,13 @@ class MarcaCrear(CreateView, LoginRequiredMixin): #Crear marca
     def form_invalid(self, form):
         response_data = {'success': True, 'message': 'Errorm formuplario invalido'}
         return JsonResponse(response_data)
+    
+
+#  API
+class ProductoListApiView(ListAPIView):
+    context_object_name = "lista"
+    serializer_class = ProdutoSerializer
+    template_name = "producto/listadoApi.html"
+
+    def get_queryset(self):
+        return Producto.objects.all()

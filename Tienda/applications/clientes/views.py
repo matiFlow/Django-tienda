@@ -1,15 +1,15 @@
+from imaplib import _Authenticator
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from audioop import reverse
-from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
+from django.contrib.auth import authenticate, login, logout
+from .serializer import ClienteSerializer
 from .models import Cliente
-from .form import ClienteForm
+from .form import ClienteForm, LoginForm
 from django.views.generic import (
     ListView,
     DeleteView,
@@ -17,10 +17,11 @@ from django.views.generic import (
     UpdateView,
     DetailView
 )
-
 from django.views.generic.edit import (
     FormView
 )
+from rest_framework.generics import ListAPIView
+
 @method_decorator(login_required, name='dispatch')
 
 # Create your views here.
@@ -93,6 +94,38 @@ class ClienteDetalles(DetailView, LoginRequiredMixin):
     model = Cliente
     template_name = "cliente/detalle.html"
     context_object_name = "detalle"
-    login_url = reverse_lazy('cliente_app:listado_clientes')
+    login_url = reverse_lazy('inicio_app:login_user')
 
 
+class LoginUser(FormView):
+    template_name = 'login.html'
+    form_class = LoginForm
+    success_url = reverse_lazy('inicio_app:inicio')
+    context_object_name = 'login'
+    
+    def form_valid(self, form):
+        user = _Authenticator(
+            username = form.cleaned_data['username'],
+            password = form.cleaned_data['password']
+            )
+        login(self.request, user)
+        return super(LoginUser, self).form_valid(form)
+    
+class LogoutView(View):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return HttpResponseRedirect(
+            reverse_lazy(
+                'inicio_app:login-user'
+            )
+        )
+
+# APIS VIEW
+    
+class ClienteListApiView(ListAPIView):
+
+    serializer_class = ClienteSerializer
+    template_name = "cliente/listadoApi.html"
+
+    def get_queryset(self):
+        return Cliente.objects.all()
