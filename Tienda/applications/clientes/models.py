@@ -6,6 +6,7 @@ class Cliente(models.Model):
     apellido = models.CharField("Apellido", max_length=50)
     direccion = models.CharField("Direccion", max_length=50)
     telefono = models.IntegerField("Telefono")
+    imagen = models.ImageField(upload_to="clientes", null=True)
 
     class Meta:
         """Meta definition for Cliente."""

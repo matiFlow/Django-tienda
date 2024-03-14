@@ -120,6 +120,18 @@ p{
     padding-bottom: 20px;
 }
 
+.row .contenido .imagen{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row .contenido .imagen img{
+    height: 440px;
+    width: 300px;
+}
+
 .row .detalle p{
     margin-top: 30px;
     padding: 13px 0 13px 0;
